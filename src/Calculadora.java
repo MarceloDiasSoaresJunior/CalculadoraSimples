@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Marcelo Dias Soares Jr
@@ -40,6 +39,7 @@ public class Calculadora extends javax.swing.JFrame {
         lblResult = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Número 1");
 
@@ -82,31 +82,27 @@ public class Calculadora extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNumeroUm))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNumeroDois, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnSomar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSubtrair)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDividir)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnMultiplicar))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtNumeroDois, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtNumeroUm))))
+                    .addComponent(lblResult, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(lblResult, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,6 +127,7 @@ public class Calculadora extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSomarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSomarActionPerformed
@@ -144,45 +141,68 @@ public class Calculadora extends javax.swing.JFrame {
             String resultado = String.valueOf(numerosSomados);
             lblResult.setText(resultado);
         } catch (java.lang.NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,"Utilizar apenas números, sem vírgulas ou pontos");
+            JOptionPane.showMessageDialog(this, "Utilizar apenas números, sem vírgulas, pontos ou espaços");
         }
     }//GEN-LAST:event_btnSomarActionPerformed
 
     private void btnSubtrairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtrairActionPerformed
         // TODO add your handling code here:
-        String numeroUm = txtNumeroUm.getText();
-        String numeroDois = txtNumeroDois.getText();
-        Double converteNumeroUm = Double.parseDouble(numeroUm);
-        Double converteNumeroDois = Double.parseDouble(numeroDois);
-        Double subtraiNumeros = (converteNumeroUm - converteNumeroDois);
-        Integer numerosSubtraidos = subtraiNumeros.intValue();
-        String resultado = String.valueOf(numerosSubtraidos);
-        lblResult.setText(resultado);
-        
+        try {
+            String numeroUm = txtNumeroUm.getText();
+            String numeroDois = txtNumeroDois.getText();
+            Double converteNumeroUm = Double.parseDouble(numeroUm);
+            Double converteNumeroDois = Double.parseDouble(numeroDois);
+            Double subtraiNumeros = (converteNumeroUm - converteNumeroDois);
+            Integer numerosSubtraidos = subtraiNumeros.intValue();
+            String resultado = String.valueOf(numerosSubtraidos);
+            lblResult.setText(resultado);
+        } catch (java.lang.NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Utilizar apenas números, sem vírgulas, pontos ou espaços");
+        }
+
     }//GEN-LAST:event_btnSubtrairActionPerformed
 
     private void btnDividirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDividirActionPerformed
         // TODO add your handling code here:
         String numeroUm = txtNumeroUm.getText();
         String numeroDois = txtNumeroDois.getText();
-        Double converteNumeroUm = Double.parseDouble(numeroUm);
-        Double converteNumeroDois = Double.parseDouble(numeroDois);
-        Double divideNumeros = (converteNumeroUm/converteNumeroDois);
-        String resultado = String.valueOf(divideNumeros);
-        String formatResultado = resultado.replace('.',',');
-        lblResult.setText(formatResultado);
+        if(numeroUm.equals("")||numeroUm.equals(" ")||numeroUm.equals(null)||numeroDois.equals("")||numeroDois.equals(" ")||numeroDois.equals(null)){
+            JOptionPane.showMessageDialog(this,"Favor, preencha um número válido!");
+        }
+        String numeroUmp = numeroUm.replace(",",".");
+        String numeroDoisp = numeroDois.replace(",",".");
+        Double convertendoNumeroUm = Double.parseDouble(numeroUmp);
+        Double convertendoNumeroDois = Double.parseDouble(numeroDoisp);
+        if(convertendoNumeroDois==0){
+            JOptionPane.showMessageDialog(this,"Não é possível dividir um número por zero");
+        }else{
+            try {
+                Double dividindoNumeros = (convertendoNumeroUm/convertendoNumeroDois);
+                String numeroDividido   = String.valueOf(dividindoNumeros);
+                String numeroFormatado = numeroDividido.replace(".",",");
+                lblResult.setText(numeroFormatado);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,e);
+            }
+        }
     }//GEN-LAST:event_btnDividirActionPerformed
 
     private void btnMultiplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplicarActionPerformed
         // TODO add your handling code here:
-        String numeroUm = txtNumeroUm.getText();
-        String numeroDois = txtNumeroDois.getText();
-        Double converteNumeroUm = Double.parseDouble(numeroUm);
-        Double converteNumeroDois = Double.parseDouble(numeroDois);
-        Double multiplicaNumeros = (converteNumeroUm * converteNumeroDois);
-        Integer numerosMultiplicados = multiplicaNumeros.intValue();
-        String resultado = String.valueOf(numerosMultiplicados);
-        lblResult.setText(resultado);
+        try {
+            String numeroUm = txtNumeroUm.getText();
+            String numeroDois = txtNumeroDois.getText();
+            Double converteNumeroUm = Double.parseDouble(numeroUm);
+            Double converteNumeroDois = Double.parseDouble(numeroDois);
+            Double multiplicaNumeros = (converteNumeroUm * converteNumeroDois);
+            Integer numerosMultiplicados = multiplicaNumeros.intValue();
+            String resultado = String.valueOf(numerosMultiplicados);
+            lblResult.setText(resultado);
+        } catch (java.lang.NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Utilizar apenas números, sem vírgulas, pontos ou espaços");
+
+        }
     }//GEN-LAST:event_btnMultiplicarActionPerformed
 
     /**
